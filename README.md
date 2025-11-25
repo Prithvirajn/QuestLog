@@ -1,36 +1,83 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# **LevelUp Life – Habit Builder & Gamified Growth Tracker**
 
-## Getting Started
+LevelUp Life is a fullstack web application designed to help users **build habits**, stay consistent and grow through **gamification**.
+The goal is simple: make self-improvement fun, structured and sustainable.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+ ## 🚀 **Features**
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### **✨ Habit Tracking**
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+* Create daily, weekly or custom habits
+* Mark completions with a single click
+* View your progress through streaks and stats
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### **🎮 Gamification System**
 
-## Learn More
+* Earn XP every time you complete a task
+* Level up your profile based on consistency
+* Motivates you to stick to your habits like a game
 
-To learn more about Next.js, take a look at the following resources:
+### **🏆 Leaderboards**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+* See how you rank among other users
+* Encourages friendly competition
+* Builds a sense of community and progress
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### **🤖 AI-Powered Habit Assistant**
 
-## Deploy on Vercel
+* Type your goal (e.g., “learn Java”, “get fit”)
+* AI generates a personalized roadmap with:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+  * step-by-step plan
+  * weekly milestones
+  * recommended resources
+  * realistic timelines
+* Helps beginners start without confusion
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 📸 **Screenshots**
+
+*Later*
+
+---
+
+## 🧩 **Tech Stack**
+
+### **Frontend**
+
+* React / Next.js
+* TailwindCSS / ShadCN (if used)
+
+### **Backend**
+
+* Node.js / Express
+* REST APIs
+
+### **Database**
+
+* PostgreSQL / Supabase
+
+### **AI Integration**
+
+* Gemini Free tier
+
+---
+
+## 🛠️ **Features To Be Added**
+
+* Advanced AI coaching
+* Push notifications & reminders
+* Achievement badges
+* Social accountability groups
+* Mobile app version (React Native)
+
+---
+
+## 📄 **License**
+
+This project is licensed under the MIT License.
+
+---
