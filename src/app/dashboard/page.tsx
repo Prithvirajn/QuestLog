@@ -93,9 +93,8 @@ export default function DashboardPage() {
   return (
     <div className="relative min-h-full">
       
-      {/* LIGHT MODE BACKGROUND (UPDATED) */}
-      {/* FIX: Changed 'bg-white' to 'bg-background' to respect the new softer theme variable */}
-      <div className="absolute inset-0 -z-10 h-full w-full bg-background dark:hidden bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px]">
+      {/* LIGHT MODE BACKGROUND */}
+      <div className="absolute inset-0 -z-10 h-full w-full bg-background dark:hidden bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] background-size: 14px_24px">
         <div className="absolute left-0 right-0 top-0 -z-10 m-auto h-[310px] w-[310px] rounded-full bg-primary/20 opacity-20 blur-[100px]"></div>
       </div>
 
@@ -114,7 +113,7 @@ export default function DashboardPage() {
                 <br /><br />
                 This dashboard is a tool for <em>your</em> growth. The XP and Levels are fun, but the real reward is the change in your life.
                 <br /><br />
-                Checking off tasks you havent done cheats only one person: <strong>You.</strong>
+                Checking off tasks you have not done cheats only one person: <strong>You.</strong>
                 <br /><br />
                 Commit to honesty. Only claim XP for real work. Are you ready to change for the better?
               </DialogDescription>
@@ -131,7 +130,7 @@ export default function DashboardPage() {
                   htmlFor="dont-show"
                   className="text-sm font-medium leading-none text-muted-foreground cursor-pointer"
                 >
-                  Dont show this again
+                  Do not show this again
                 </label>
               </div>
               <Button onClick={handleAcceptDisclaimer} className="w-full sm:w-auto bg-yellow-600 hover:bg-yellow-700 text-white">
@@ -143,12 +142,14 @@ export default function DashboardPage() {
 
         {/* Column 1: Main Content */}
         <div className="lg:col-span-2 space-y-6">
+          {/* FIX: Passing 'user' prop here */}
           <UserProfile user={user} />
           <TaskList user={user} />
         </div>
 
         {/* Column 2: Sidebar Content */}
         <div className="lg:col-span-1 space-y-6">
+          {/* FIX: Passing 'user' prop here too */}
           <BadgesWidget user={user} />
           <LeaderboardWidget />
         </div>
