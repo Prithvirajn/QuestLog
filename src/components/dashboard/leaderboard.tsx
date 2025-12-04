@@ -8,7 +8,13 @@ import { supabase } from "@/lib/supabaseClient";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-type Profile = { id: string; email: string; xp: number; };
+// Updated Type
+type Profile = { 
+    id: string; 
+    email: string; 
+    xp: number; 
+    display_name: string | null; // Added
+};
 
 export function LeaderboardWidget() {
   const [leaders, setLeaders] = useState<Profile[]>([]);
@@ -17,19 +23,21 @@ export function LeaderboardWidget() {
     const fetchLeaders = async () => {
       const { data } = await supabase
         .from("profiles")
-        .select("id, email, xp")
+        .select("id, email, xp, display_name") // Added display_name
         .order("xp", { ascending: false })
-        .limit(5); // Only show top 5 on dashboard
+        .limit(5); 
       
       if (data) setLeaders(data);
     };
     
     fetchLeaders();
     
-    // Simple polling for leaderboard to keep it fresh
     const interval = setInterval(fetchLeaders, 30000);
     return () => clearInterval(interval);
   }, []);
+
+  // Helper
+  const getName = (p: Profile) => p.display_name || p.email.split("@")[0];
 
   return (
     <Card>
@@ -57,11 +65,11 @@ export function LeaderboardWidget() {
                 </div>
                 <Avatar className="h-8 w-8">
                   <AvatarFallback className="text-xs">
-                    {user.email?.substring(0, 2).toUpperCase()}
+                    {getName(user).substring(0, 2).toUpperCase()}
                   </AvatarFallback>
                 </Avatar>
                 <span className="text-sm font-medium truncate max-w-[100px]">
-                    {user.email?.split("@")[0]}
+                    {getName(user)}
                 </span>
               </div>
               <span className="text-sm font-bold text-muted-foreground">{user.xp} XP</span>

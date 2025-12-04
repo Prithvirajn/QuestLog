@@ -26,12 +26,18 @@ const getNextLevelXP = (level: number) => 100 * Math.pow(level, 2);
 
 export function UserProfile({ user }: { user: User | null }) {
   const [xp, setXp] = useState(0);
+  // FIX: Rename state to differentiate between "DB Name" and "Fallback Name"
+  const [dbDisplayName, setDbDisplayName] = useState<string | null>(null);
   const [showLevelUp, setShowLevelUp] = useState(false);
   const prevLevelRef = useRef(1);
   
-  const displayName = user?.email 
+  // FIX: Calculate fallback name during render (no effect needed)
+  const emailName = user?.email 
     ? user.email.split("@")[0].charAt(0).toUpperCase() + user.email.split("@")[0].slice(1)
     : "Adventurer";
+
+  // Use DB name if we have it, otherwise use email fallback
+  const displayName = dbDisplayName || emailName;
 
   const level = getLevel(xp);
   const nextLevelXP = getNextLevelXP(level);
@@ -40,17 +46,23 @@ export function UserProfile({ user }: { user: User | null }) {
   useEffect(() => {
     if (!user) return;
 
+    // REMOVED: setDisplayName(emailName) - This was causing the warning
+
     const fetchProfile = async () => {
       const { data } = await supabase
         .from("profiles")
-        .select("xp")
+        .select("xp, display_name")
         .eq("id", user.id)
         .single();
 
       if (data) {
         const newXp = data.xp || 0;
         const currentLevel = getLevel(newXp);
+        
         setXp(newXp);
+        if (data.display_name) {
+            setDbDisplayName(data.display_name); // FIX: Update DB name state
+        }
         prevLevelRef.current = currentLevel;
       }
     };
@@ -62,7 +74,8 @@ export function UserProfile({ user }: { user: User | null }) {
         "postgres_changes",
         { event: "UPDATE", schema: "public", table: "profiles", filter: `id=eq.${user.id}` },
         (payload) => {
-          const newXp = (payload.new as { xp: number }).xp;
+          const newData = payload.new as { xp: number; display_name: string | null };
+          const newXp = newData.xp;
           const newLevel = getLevel(newXp);
           
           if (newLevel > prevLevelRef.current) {
@@ -71,6 +84,10 @@ export function UserProfile({ user }: { user: User | null }) {
           }
           
           setXp(newXp);
+          // Update name in real-time if it changes
+          if (newData.display_name) {
+              setDbDisplayName(newData.display_name); // FIX: Update DB name state
+          }
         }
       )
       .subscribe();
@@ -99,7 +116,6 @@ export function UserProfile({ user }: { user: User | null }) {
 
       {/* LEVEL UP MODAL */}
       <Dialog open={showLevelUp} onOpenChange={setShowLevelUp}>
-        {/* FIX: Changed bg-primary/5 (transparent) to bg-indigo-50 (solid light) and dark:bg-zinc-900 (solid dark) */}
         <DialogContent className="sm:max-w-md text-center border-primary bg-indigo-50 dark:bg-zinc-900">
           <DialogHeader>
             <div className="mx-auto bg-primary/20 p-3 rounded-full w-fit mb-4">

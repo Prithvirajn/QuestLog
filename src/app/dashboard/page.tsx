@@ -18,13 +18,20 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox"; 
-import { ShieldAlert } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { ShieldAlert, UserPlus } from "lucide-react";
 
 export default function DashboardPage() {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  
   const [showDisclaimer, setShowDisclaimer] = useState(false); 
+  const [showUsernameModal, setShowUsernameModal] = useState(false);
   const [dontShowAgain, setDontShowAgain] = useState(false); 
+  
+  const [newUsername, setNewUsername] = useState("");
+  const [isUpdatingName, setIsUpdatingName] = useState(false);
+
   const router = useRouter();
 
   useEffect(() => {
@@ -39,9 +46,20 @@ export default function DashboardPage() {
 
         setUser(session.user);
         
-        const hasOptedOut = localStorage.getItem("hasSeenDisclaimer");
+        const hasOptedOut = localStorage.getItem("hasSeenDisclaimer_v2");
         if (!hasOptedOut) {
           setShowDisclaimer(true);
+        }
+
+        const { data: profile, error } = await supabase
+            .from('profiles')
+            .select('display_name')
+            .eq('id', session.user.id)
+            .single();
+        
+        if (error || !profile || !profile.display_name) {
+            console.log("Profile missing or incomplete, showing modal.");
+            setShowUsernameModal(true);
         }
 
       } catch (error) {
@@ -70,9 +88,40 @@ export default function DashboardPage() {
 
   const handleAcceptDisclaimer = () => {
     if (dontShowAgain) {
-        localStorage.setItem("hasSeenDisclaimer", "true");
+        localStorage.setItem("hasSeenDisclaimer_v2", "true");
     }
     setShowDisclaimer(false);
+  };
+
+  const handleSaveUsername = async () => {
+      if (!user || !newUsername.trim()) return;
+      setIsUpdatingName(true);
+
+      // FIX: Fetch existing XP first so we don't overwrite it with 0
+      const { data: existingProfile } = await supabase
+        .from('profiles')
+        .select('xp')
+        .eq('id', user.id)
+        .single();
+      
+      const currentXp = existingProfile?.xp || 0;
+
+      const { error } = await supabase
+        .from('profiles')
+        .upsert({ 
+            id: user.id, 
+            email: user.email,
+            display_name: newUsername,
+            xp: currentXp // Preserve existing XP
+        }, { onConflict: 'id' });
+
+      if (!error) {
+          setShowUsernameModal(false);
+          window.location.reload(); 
+      } else {
+          alert("Error saving name: " + error.message);
+      }
+      setIsUpdatingName(false);
   };
 
   if (isLoading) {
@@ -92,15 +141,12 @@ export default function DashboardPage() {
 
   return (
     <div className="relative min-h-full">
-      
-      {/* LIGHT MODE BACKGROUND */}
-      <div className="absolute inset-0 -z-10 h-full w-full bg-background dark:hidden bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] background-size: 14px_24px">
+      <div className="absolute inset-0 -z-10 h-full w-full bg-background dark:hidden bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px]">
         <div className="absolute left-0 right-0 top-0 -z-10 m-auto h-[310px] w-[310px] rounded-full bg-primary/20 opacity-20 blur-[100px]"></div>
       </div>
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         
-        {/* DISCLAIMER MODAL */}
         <Dialog open={showDisclaimer} onOpenChange={setShowDisclaimer}>
           <DialogContent className="sm:max-w-[500px] border-yellow-500 bg-yellow-50 dark:bg-zinc-900 dark:border-yellow-600">
             <DialogHeader>
@@ -140,16 +186,40 @@ export default function DashboardPage() {
           </DialogContent>
         </Dialog>
 
-        {/* Column 1: Main Content */}
+        <Dialog open={showUsernameModal} onOpenChange={() => { }}>
+          <DialogContent className="sm:max-w-[425px]">
+            <DialogHeader>
+              <DialogTitle className="flex items-center gap-2 text-primary">
+                <UserPlus className="h-6 w-6" />
+                New Feature: Identity
+              </DialogTitle>
+              <DialogDescription className="pt-2">
+                We have rolled out a new feature! You can now have a unique <strong>Adventuring Name</strong> instead of just an email.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="py-4">
+                <label htmlFor="new-username" className="text-sm font-medium mb-2 block">Choose your name:</label>
+                <Input 
+                    id="new-username" 
+                    value={newUsername} 
+                    onChange={(e) => setNewUsername(e.target.value)}
+                    placeholder="e.g. DragonSlayer99" 
+                />
+            </div>
+            <DialogFooter>
+                <Button onClick={handleSaveUsername} disabled={!newUsername.trim() || isUpdatingName}>
+                    {isUpdatingName ? "Saving..." : "Set Adventuring Name"}
+                </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+
         <div className="lg:col-span-2 space-y-6">
-          {/* FIX: Passing 'user' prop here */}
           <UserProfile user={user} />
           <TaskList user={user} />
         </div>
 
-        {/* Column 2: Sidebar Content */}
         <div className="lg:col-span-1 space-y-6">
-          {/* FIX: Passing 'user' prop here too */}
           <BadgesWidget user={user} />
           <LeaderboardWidget />
         </div>

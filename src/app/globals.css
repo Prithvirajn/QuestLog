@@ -46,47 +46,29 @@
 /* --- LIGHT MODE THEME (Easy on the Eyes) --- */
 :root {
   --radius: 0.625rem;
-  
-  /* BACKGROUND: Changed to 'Soft Stone/Zinc' (0.96) instead of bright white (1.0) */
   --background: oklch(0.96 0.005 260); 
-  
-  /* TEXT: Changed to 'Deep Charcoal' (0.25) instead of sharp black (0.0) */
   --foreground: oklch(0.25 0.02 260);
-  
-  /* CARDS: Keep white to pop against the gray background */
   --card: oklch(1 0 0); 
   --card-foreground: oklch(0.25 0.02 260);
-  
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.25 0.02 260);
-
-  /* Primary Indigo (Slightly softer) */
   --primary: oklch(0.55 0.2 268);
   --primary-foreground: oklch(0.98 0 0);
-
-  /* Secondary/Muted: Darker for better definition */
   --secondary: oklch(0.92 0.01 260);
   --secondary-foreground: oklch(0.25 0.02 260);
-  
   --muted: oklch(0.92 0.01 260);
   --muted-foreground: oklch(0.5 0.02 260);
-  
   --accent: oklch(0.92 0.01 260);
   --accent-foreground: oklch(0.25 0.02 260);
-  
   --destructive: oklch(0.6 0.2 20);
-  --border: oklch(0.88 0.01 260); /* More visible borders */
+  --border: oklch(0.88 0.01 260);
   --input: oklch(0.88 0.01 260);
   --ring: oklch(0.55 0.2 268);
-
-  /* Charts */
   --chart-1: oklch(0.75 0.18 90);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
   --chart-4: oklch(0.828 0.189 84.429);
   --chart-5: oklch(0.769 0.188 70.08);
-  
-  /* SIDEBAR: Matches background for a cohesive, non-distracting look */
   --sidebar: oklch(0.96 0.005 260);
   --sidebar-foreground: oklch(0.3 0.02 260);
   --sidebar-primary: oklch(0.55 0.2 268);
@@ -138,5 +120,8 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+  html {
+    scroll-behavior: smooth;
   }
 }
