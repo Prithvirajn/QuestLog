@@ -1,4 +1,3 @@
-import { ModeToggle } from "@/components/mode-toggle";
 import { UserNav } from "@/components/dashboard/user-nav"; 
 import { MobileNav } from "./mobile-nav";
 
@@ -9,7 +8,6 @@ export default function Header() {
       <div className="flex-1">
         {/* You can add a Search Bar here later */}
       </div>
-      <ModeToggle />
       <UserNav />
     </header>
   );

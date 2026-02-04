@@ -1,37 +1,66 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { ModeToggle } from "@/components/mode-toggle";
 
 export default function LandingHeader() {
   return (
-    <header className="p-4 bg-background border-b sticky top-0 z-50">
+    // Removed background and border from the header container
+    <header className="fixed top-0 left-0 right-0 z-50 p-4">
       <div className="container mx-auto flex justify-between items-center px-2 md:px-4">
-        <Link href="/" className="flex items-center gap-2">
+        
+        {/* Logo & Title with Floating Pill Background */}
+        {/* Standardized Size: h-10 px-5 */}
+        {/* Background: Specific OKLCH Color */}
+        <Link 
+          href="/" 
+          className="flex items-center gap-2 h-10 px-5 bg-[oklch(28.518%_0.062_21.727)]/90 backdrop-blur-md border border-white/10 rounded-full shadow-lg hover:bg-[oklch(28.518%_0.062_21.727)] transition-all"
+        >
           <Image
-            src="/faviconpng.png" 
-            alt="LevelUp Life Logo"
-            width={32} 
-            height={32} 
-            className="h-6 w-6 md:h-8 md:w-8" // Smaller logo on mobile
+            src="/logo.png" 
+            alt="QuestLog Logo"
+            width={24} 
+            height={24} 
+            className="h-6 w-6 drop-shadow-md" 
           />
-          <span className="text-lg md:text-2xl font-bold text-primary"> {/* Smaller text on mobile */}
-            LevelUp Life
+          <span className="text-lg font-bold text-white drop-shadow-sm"> 
+            QuestLog
           </span>
         </Link>
+
         <nav className="flex gap-2 md:gap-4 items-center">
-          <Link href="#features" className="hidden md:block text-sm text-muted-foreground hover:text-foreground">
+          {/* Features Link */}
+          {/* Standardized Size: h-10 px-5, flex for centering */}
+          <Link 
+            href="#features" 
+            className="hidden md:flex items-center justify-center h-10 px-5 text-sm font-medium text-gray-200 hover:text-white transition-colors bg-[oklch(28.518%_0.062_21.727)]/90 hover:bg-[oklch(28.518%_0.062_21.727)] backdrop-blur-sm rounded-full border border-white/10"
+          >
             Features
           </Link>
+
+          {/* Sign In Buttons */}
           <Link href="/auth?tab=signin">
-            <Button variant="ghost" size="sm" className="hidden md:inline-flex">Sign In</Button>
-            {/* Mobile-only shortened button */}
-            <Button variant="ghost" size="sm" className="md:hidden">Log In</Button>
+            <Button 
+                variant="ghost" 
+                className="hidden md:inline-flex h-10 px-5 bg-[oklch(28.518%_0.062_21.727)]/90 backdrop-blur-md border border-white/10 rounded-full text-white hover:bg-[oklch(28.518%_0.062_21.727)] hover:text-white shadow-md"
+            >
+                Sign In
+            </Button>
+            <Button 
+                variant="ghost" 
+                className="md:hidden h-10 px-5 bg-[oklch(28.518%_0.062_21.727)]/90 backdrop-blur-md border border-white/10 rounded-full text-white hover:bg-[oklch(28.518%_0.062_21.727)] hover:text-white shadow-md"
+            >
+                Log In
+            </Button>
           </Link>
+
+          {/* Get Started - Primary Pill - VIBRANT RED */}
           <Link href="/auth?tab=signup">
-            <Button size="sm">Get Started</Button>
+            <Button 
+                className="h-10 px-5 bg-[#BE3144] hover:bg-[#a02334] text-white rounded-full shadow-lg border border-white/10 transition-colors"
+            >
+                Get Started
+            </Button>
           </Link>
-          <ModeToggle />
         </nav>
       </div>
     </header>

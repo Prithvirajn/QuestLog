@@ -36,7 +36,7 @@ export function NavLinks({ onLinkClick }: { onLinkClick?: () => void }) {
             className="w-full justify-start gap-2"
           >
             <Target className="h-4 w-4" />
-            AI Planner
+            The Void
           </Button>
         </Link>
       </li>
@@ -47,7 +47,7 @@ export function NavLinks({ onLinkClick }: { onLinkClick?: () => void }) {
             className="w-full justify-start gap-2"
           >
             <Trophy className="h-4 w-4" />
-            Leaderboard
+            Hall of Heroes
           </Button>
         </Link>
       </li>

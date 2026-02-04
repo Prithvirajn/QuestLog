@@ -1,70 +1,69 @@
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Brain, Zap, Trophy } from "lucide-react";
+import { Sparkles, Zap, Trophy } from "lucide-react";
 import Image from "next/image";
 
 export default function FeaturesSection() {
   return (
-    // FIX: Added 'px-6' to prevent cards from touching the screen edges on mobile
-    <section id="features" className="py-20 bg-background px-6">
+    <section id="features" className="py-20 bg-transparent px-6 relative z-10">
       <div className="container mx-auto text-center">
-        <h2 className="text-3xl font-bold mb-4">How It Works</h2>
-        <p className="text-muted-foreground mb-12">Stop tracking, start achieving.</p>
+        <h2 className="text-3xl font-bold mb-4 text-foreground drop-shadow-md text-outline">How It Works</h2>
+        <p className="text-muted-foreground mb-12 drop-shadow-sm font-medium text-outline">Stop tracking, start achieving.</p>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           
-          <Card className="overflow-hidden">
-          {/*  <div className="relative w-full aspect-video">
+          {/* CARD 1: AI Planner */}
+          <Card className="overflow-hidden bg-card/80 backdrop-blur-sm border-primary/10 p-0">
+            <div className="relative w-full aspect-video">
               <Image
-                src="/feature-ai.jpg"
+                src="/feature-ai.webp"
                 alt="AI planning"
                 fill
                 className="object-cover"
               />
-            </div>*/}
-            {/* FIX: Force centering with flex-col and items-center */}
-            <CardHeader className="flex flex-col items-center text-center">
-              <Brain className="w-12 h-12 text-primary mb-4" />
-              <CardTitle>AI-Powered Planning</CardTitle>
+            </div>
+            {/* Added pb-8 for extra bottom padding */}
+            <CardHeader className="flex flex-col items-center text-center p-6 pt-6 pb-8">
+              <CardTitle className="text-2xl">Whispers of the Void</CardTitle>
               <CardDescription>
-                Tell us your goal. Our AI will build a custom roadmap with daily tasks and milestones.
+                Cast your ambitions into the Void. It whispers a structured prophecy, a custom roadmap to fulfill your destiny. But careful! the Void speaks in shifting possibilities. Follow its guidance at your own peril.
               </CardDescription>
             </CardHeader>
           </Card>
 
-          <Card className="overflow-hidden">
-            {/*<div className="relative w-full aspect-video">
+          {/* CARD 2: Gamification */}
+          <Card className="overflow-hidden bg-card/80 backdrop-blur-sm border-primary/10 p-0">
+            <div className="relative w-full aspect-video">
               <Image
-                src="/feature-gamify.jpg"
+                src="/grind.webp"
                 alt="Gamify tasks"
                 fill
                 className="object-cover"
               />
-            </div>*/}
-            {/* FIX: Force centering */}
-            <CardHeader className="flex flex-col items-center text-center">
-              <Zap className="w-12 h-12 text-green-600 mb-4" />
-              <CardTitle>Gamify Your Grind</CardTitle>
+            </div>
+            {/* Added pb-8 */}
+            <CardHeader className="flex flex-col items-center text-center p-6 pt-6 pb-8">
+              <CardTitle className="text-2xl">Quest Bound</CardTitle>
               <CardDescription>
-                Complete tasks to earn XP. Level up and unlock achievements just like in a game.
+                 The tactical map of your domain. Complete tasks to earn XP and treat every task as a strategic directive from your highest self. Greatness is not granted, but earned through consistent execution.
               </CardDescription>
             </CardHeader>
           </Card>
 
-          <Card className="overflow-hidden">
-           {/* <div className="relative w-full aspect-video">
+          {/* CARD 3: Leaderboard */}
+          <Card className="overflow-hidden bg-card/80 backdrop-blur-sm border-primary/10 p-0">
+            <div className="relative w-full aspect-video">
               <Image
-                src="/feature-leaderboard.jpg" 
+                src="/leaderbord.webp" 
                 alt="Leaderboard"
                 fill
-                className="object-cover"
+                className="object-cover rounded"
               />
-            </div>*/}
-            {/* FIX: Force centering */}
-            <CardHeader className="flex flex-col items-center text-center">
-              <Trophy className="w-12 h-12 text-yellow-500 mb-4" />
-              <CardTitle>Compete & Conquer</CardTitle>
+            </div>
+            {/* Added pb-8 */}
+            <CardHeader className="flex flex-col items-center text-center p-6 pt-6 pb-8">
+              <CardTitle className="text-2xl">Hall of Heroes</CardTitle>
               <CardDescription>
-                Climb the global leaderboards and see how you stack up against other users.
+               Public discipline is the foundation of character. The leaderboards proves your resolve, measuring the weight of your labor against the collective momentum of the realm. Climb and see where you stand.
               </CardDescription>
             </CardHeader>
           </Card>

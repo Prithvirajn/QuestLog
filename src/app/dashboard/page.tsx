@@ -58,7 +58,6 @@ export default function DashboardPage() {
             .single();
         
         if (error || !profile || !profile.display_name) {
-            console.log("Profile missing or incomplete, showing modal.");
             setShowUsernameModal(true);
         }
 
@@ -97,7 +96,6 @@ export default function DashboardPage() {
       if (!user || !newUsername.trim()) return;
       setIsUpdatingName(true);
 
-      // FIX: Fetch existing XP first so we don't overwrite it with 0
       const { data: existingProfile } = await supabase
         .from('profiles')
         .select('xp')
@@ -112,7 +110,7 @@ export default function DashboardPage() {
             id: user.id, 
             email: user.email,
             display_name: newUsername,
-            xp: currentXp // Preserve existing XP
+            xp: currentXp 
         }, { onConflict: 'id' });
 
       if (!error) {
@@ -141,18 +139,17 @@ export default function DashboardPage() {
 
   return (
     <div className="relative min-h-full">
-      <div className="absolute inset-0 -z-10 h-full w-full bg-background dark:hidden bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px]">
-        <div className="absolute left-0 right-0 top-0 -z-10 m-auto h-[310px] w-[310px] rounded-full bg-primary/20 opacity-20 blur-[100px]"></div>
-      </div>
+      {/* Removed Light Mode Background div - now uses global theme */}
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         
+        {/* MODAL 1: DISCLAIMER */}
         <Dialog open={showDisclaimer} onOpenChange={setShowDisclaimer}>
-          <DialogContent className="sm:max-w-[500px] border-yellow-500 bg-yellow-50 dark:bg-zinc-900 dark:border-yellow-600">
+          <DialogContent className="sm:max-w-[500px] border-primary bg-card">
             <DialogHeader>
-              <DialogTitle className="flex items-center gap-2 text-yellow-700 dark:text-yellow-500">
+              <DialogTitle className="flex items-center gap-2 text-primary">
                 <ShieldAlert className="h-6 w-6" />
-                LevelUp Life: The Honor Code
+                QuestLog: The Honor Code
               </DialogTitle>
               <DialogDescription className="pt-4 text-base text-foreground">
                 <strong>Welcome, Adventurer.</strong>
@@ -170,7 +167,7 @@ export default function DashboardPage() {
                   id="dont-show" 
                   checked={dontShowAgain}
                   onCheckedChange={(checked) => setDontShowAgain(checked as boolean)}
-                  className="border-yellow-600 data-[state=checked]:bg-yellow-600 text-white"
+                  className="border-primary data-[state=checked]:bg-primary text-primary-foreground"
                 />
                 <label
                   htmlFor="dont-show"
@@ -179,13 +176,14 @@ export default function DashboardPage() {
                   Do not show this again
                 </label>
               </div>
-              <Button onClick={handleAcceptDisclaimer} className="w-full sm:w-auto bg-yellow-600 hover:bg-yellow-700 text-white">
+              <Button onClick={handleAcceptDisclaimer} className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-primary-foreground">
                 I Accept the Challenge
               </Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>
 
+        {/* MODAL 2: SET USERNAME */}
         <Dialog open={showUsernameModal} onOpenChange={() => { }}>
           <DialogContent className="sm:max-w-[425px]">
             <DialogHeader>

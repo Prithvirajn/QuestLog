@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "LevelUP Life",
+  title: "QuestLog",
   description: "Your AI habit tracker.",
 };
 

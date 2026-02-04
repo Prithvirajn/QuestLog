@@ -17,7 +17,7 @@ export function AIGenerator() {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Zap className="h-5 w-5 text-primary" />
-          AI Quest Planner
+          The Void
         </CardTitle>
         <CardDescription>
           Tell the AI your new goal.

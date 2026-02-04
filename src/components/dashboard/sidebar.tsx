@@ -8,13 +8,13 @@ export default function Sidebar() {
       <div className="flex h-16 items-center border-b px-6 border-sidebar-border">
         <Link href="/" className="flex items-center gap-2 font-semibold text-sidebar-foreground">
           <Image 
-             src="/faviconpng.png"      
+             src="/QuestLog_Logo.png"      
             alt="LevelUp Life Logo"
             width={40}           
             height={40}           
             className="h-10 w-10" 
           />
-          <span className="">LevelUp Life</span>
+          <span className="">QuestLog</span>
         </Link>
       </div>
 
